@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string nombre;
+    float notaAnalisis, notaDiseno, notaCodificacion, porcentajeAvance, promedio, notaFinal;
+    int errores;
+    char documentacion, exposicion;
+    string estado, observacion;
+
+    cout << "Ingrese nombre del estudiante: ";
+    getline(cin, nombre);
+    
+    do {
+        cout << "Nota de analisis (0-10): ";
+        cin >> notaAnalisis;
+        if (notaAnalisis < 0 || notaAnalisis > 10)
+            cout << "Nota invalida. Ingrese nuevamente." << endl;
+    } while (notaAnalisis < 0 || notaAnalisis > 10);
+    
+    do {
+        cout << "Nota de diseno (0-10): ";
+        cin >> notaDiseno;
+        if (notaDiseno < 0 || notaDiseno > 10)
+            cout << "Nota invalida. Ingrese nuevamente." << endl;
+    } while (notaDiseno < 0 || notaDiseno > 10);
+    
+    do {
+        cout << "Nota de codificacion (0-10): ";
+        cin >> notaCodificacion;
+        if (notaCodificacion < 0 || notaCodificacion > 10)
+            cout << "Nota invalida. Ingrese nuevamente." << endl;
+    } while (notaCodificacion < 0 || notaCodificacion > 10);
+
+    cout << "Porcentaje de avance: ";
+    cin >> porcentajeAvance;
+    cout << "Numero de errores: ";
+    cin >> errores;
+    cout << "Presento documentacion? (S/N): ";
+    cin >> documentacion;
+    cout << "Realizo exposicion? (S/N): ";
+    cin >> exposicion;
+
+    promedio = (notaAnalisis + notaDiseno + notaCodificacion) / 3;
+    notaFinal = promedio - (errores * 0.5);
+
+    if (documentacion == 'S' || documentacion == 's') notaFinal = notaFinal + 0.5;
+    if (exposicion == 'S' || exposicion == 's') notaFinal = notaFinal + 0.5;
+
+    if (notaFinal > 10) notaFinal = 10;
+    if (notaFinal < 0) notaFinal = 0;
+
+    if (notaFinal >= 9 && notaFinal <= 10) {
+        estado = "Excelente";
+        if (porcentajeAvance < 60) estado = "Aprobado";
+    }
+    else if (notaFinal >= 7 && notaFinal <= 8.99) estado = "Aprobado";
+    else if (notaFinal >= 5 && notaFinal <= 6.99) estado = "Recuperacion";
+    else estado = "Reprobado";
+
+    if (notaFinal >= 7 && (documentacion == 'N' || documentacion == 'n'))
+        observacion = "Buen producto, pero mala formalidad";
+    else
+        observacion = "Ninguna";
+
+    cout << "\n=== RESULTADOS ===" << endl;
+    cout << "Estudiante: " << nombre << endl;
+    cout << "Promedio tecnico: " << promedio << endl;
+    cout << "Ajustes aplicados: -" << errores * 0.5 << " (errores)";
+    if (documentacion == 'S' || documentacion == 's') cout << " +0.5 (documentacion)";
+    if (exposicion == 'S' || exposicion == 's') cout << " +0.5 (exposicion)";
+    cout << endl;
+    cout << "Nota final: " << notaFinal << endl;
+    cout << "Estado: " << estado << endl;
+    cout << "Observacion: " << observacion << endl;
+
+    return 0;
+}
